@@ -75,7 +75,8 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is called at the very end of the page because it won't work otherwise. And interfere with the other functions up above it.
+
 articleView.initNewArticlePage = () => {
   // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
 
@@ -112,7 +113,6 @@ articleView.create = () => {
 
   let article = new Article(aobj);
 
-  // console.log(article);
   // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
   $('#articles').append(article.toHtml());
 
@@ -125,7 +125,8 @@ articleView.create = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is called at the end of the initnewArticlePage function because it is meant to create a new article page.
+
 articleView.initIndexPage = () => {
   articles.forEach(article => $('#articles').append(article.toHtml()));
   articleView.populateFilters();
