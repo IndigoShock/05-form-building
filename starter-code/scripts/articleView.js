@@ -75,42 +75,58 @@ articleView.setTeasers = () => {
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is called at the very end of the page because it won't work otherwise. And interfere with the other functions up above it.
+
 articleView.initNewArticlePage = () => {
   // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
 
+  $('.tab-content').show();
 
   // TODO: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
 
   $('#article-json').on('focus', function(){
-    this.select();
+    $(this).select();
+    document.execCommand('copy');
   });
 
   // TODO: Add an event handler to update the preview and the export field if any inputs change.
+  $('#new-article').on('change', 'input, textarea', articleView.create);
 
 };
 
 articleView.create = () => {
+
   // TODO: Set up a variable to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
-
+  $('#articles > *').remove();
 
   // TODO: Instantiate an article based on what's in the form fields:
+  let aobj ={
+    title : $('#title').val(),
+    category : $('#category').val(),
+    author : $('#author').val(),
+    authorUrl : $('#authorUrl').val(),
+    publishedOn : $('#publishedOn').val(),
+    body : $('#body').val()
+  };
 
+  let article = new Article(aobj);
 
   // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
-
+  $('#articles').append(article.toHtml());
 
   // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
   $('pre code').each();
 
   // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+  $('#article-json').val(JSON.stringify(article));
 
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// This function is called at the end of the initnewArticlePage function because it is meant to create a new article page.
+
 articleView.initIndexPage = () => {
   articles.forEach(article => $('#articles').append(article.toHtml()));
   articleView.populateFilters();
